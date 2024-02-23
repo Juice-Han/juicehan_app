@@ -9,13 +9,18 @@ const Papago = (props: Props) => {
   const [afterTranslatedText, setAfterTranslatedText] = useState<string>("");
 
   const translate = async () => {
-    const response = await axios.post(
-      "http://localhost:8080/papago/translate",
-      {
-        content: beforeTranslatedText,
-      }
-    );
-    setAfterTranslatedText(response.data.message.result.translatedText);
+    try{
+      const response = await axios.post(
+        "http://localhost:8080/papago/translate",
+        {
+          content: beforeTranslatedText,
+        }
+      );
+      setAfterTranslatedText(response.data.message.result.translatedText);
+    }catch(e){
+      console.error(e);
+    }
+    
   };
   return (
     <>
