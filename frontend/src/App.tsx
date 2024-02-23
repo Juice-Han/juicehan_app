@@ -8,7 +8,6 @@ import Papago from "./pages/Papago";
 function App() {
   return (
     <>
-      <Header></Header>
       <Routes>
         <Route path="/" element={<MainPage />}/>
         <Route path="/papago" element={<Papago/>}/>
