@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -8,6 +9,8 @@ const LoginPage = (props: Props) => {
   const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [resStatus, setResStatus] = useState("");
+
+  const navigate = useNavigate();
 
   const getLogin = async () => {
     try {
@@ -19,6 +22,7 @@ const LoginPage = (props: Props) => {
       console.log(response.status);
       if (response.status === 200) {
         setResStatus("로그인 성공!!");
+        navigate('/');
       }
     } catch (err) {
       console.error(err);
