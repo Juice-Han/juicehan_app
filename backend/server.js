@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const tokenService = require('./jwt');
+const userRouter = require('./routes/user.js')
 require("dotenv").config();
 
 let corsOptions = {
@@ -18,9 +20,7 @@ app.listen(8080, () => {
   console.log('8080 포트에서 서버 실행중');
 })
 
-app.get('/', (req, res) => {
-  res.send('Hello world!');
-})
+app.use('/user',userRouter);
 
 app.post('/papago/translate', function (req, res) {
   const api_url = 'https://openapi.naver.com/v1/papago/n2mt';
@@ -42,19 +42,3 @@ app.post('/papago/translate', function (req, res) {
       console.error(err)
     })
 });
-
-let users = [];
-
-app.post('/user/register', (req, res) => {
-  const { id, password, name } = req.body;
-  if (!id || !password || !name) {
-    res.status(400).send({ message: '필수 입력사항을 제대로 입력해주세요.' });
-    return;
-  }
-  if (users.find((user) => user.id === id)) {
-    res.status(400).send({ message: '아이디가 중복됩니다. 다른 아이디를 사용해주세요.' });
-    return;
-  }
-  users.push({ id, password, name });
-  res.status(200).json({ message: '계정 생성 완료' });
-})
