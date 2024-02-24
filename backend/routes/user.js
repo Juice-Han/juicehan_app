@@ -29,7 +29,8 @@ router.post('/login', (req, res) => {
         res.status(400).send({ message: '잘못된 비밀번호입니다.' });
         return;
     }
-    res.status(200).send({ token: tokenService.getToken(id) });
+    const token = tokenService.getToken(id);
+    res.status(200).send({message: '계정 생성 완료', token: token});
 })
 
 module.exports = router

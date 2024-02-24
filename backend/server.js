@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const tokenService = require('./jwt');
+const {auth} = require('./middlewares/authMiddleware.js')
 const userRouter = require('./routes/user.js')
 require("dotenv").config();
 
@@ -41,4 +41,14 @@ app.post('/papago/translate', function (req, res) {
     .catch((err) => {
       console.error(err)
     })
+});
+
+app.get('/payload', auth, (req,res) => {
+  const user_id = req.decoded.user_id
+  return res.status(200).json({
+    message: '토큰은 정상입니다.',
+    data: {
+      user_id: user_id
+    }
+  });
 });
